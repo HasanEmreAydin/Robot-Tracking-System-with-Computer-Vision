@@ -1,0 +1,9 @@
+all:  CameraCalibration 
+	g++ lib/CameraCalibration.o -o bin/CameraCalibration -L/usr/lib/x86_64-linux-gnu `pkg-config --libs opencv4`
+		
+CameraCalibration: src/CameraCalibration.cpp
+	g++ -c src/CameraCalibration.cpp -o lib/CameraCalibration.o -I./include -I/usr/include/opencv4
+	
+clean:
+	rm lib/*.o
+	rm bin/*

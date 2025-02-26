@@ -1,0 +1,20 @@
+all:  CameraCalibration Kinematics Dxl Servoing
+	g++ lib/CameraCalibration.o -o bin/CameraCalibration -L/usr/lib/x86_64-linux-gnu `pkg-config --libs opencv4`
+	g++ -o bin/RobotServoing lib/RobotServoing.o lib/Kinematics.o lib/DynamixelHandler.o -L/usr/local/lib/ -ldxl_x64_cpp -lrt -L/usr/lib/x86_64-linux-gnu `pkg-config --libs opencv4`
+	
+CameraCalibration: src/CameraCalibration.cpp
+	g++ -c src/CameraCalibration.cpp -o lib/CameraCalibration.o -I./include -I/usr/include/opencv4
+	
+Kinematics: src/Kinematics.cpp
+	g++ -c src/Kinematics.cpp -o lib/Kinematics.o -I./include -I/usr/include/opencv4
+
+Dxl: src/DynamixelHandler.cpp
+	g++ -c src/DynamixelHandler.cpp -o lib/DynamixelHandler.o -I./include -I/usr/local/include
+	
+Servoing: src/RobotServoing.cpp
+	g++ -c src/RobotServoing.cpp -o lib/RobotServoing.o -I./include -I/usr/include/opencv4
+
+
+clean:
+	rm lib/*.o
+	rm bin/*
